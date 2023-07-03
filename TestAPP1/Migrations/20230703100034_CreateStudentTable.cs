@@ -15,7 +15,7 @@ namespace TestAPP1.Migrations
                 name: "st");
 
             migrationBuilder.CreateTable(
-                name: "Student",
+                name: "StudentDto",
                 schema: "st",
                 columns: table => new
                 {
@@ -39,7 +39,7 @@ namespace TestAPP1.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Student",
+                name: "StudentDto",
                 schema: "st");
         }
     }

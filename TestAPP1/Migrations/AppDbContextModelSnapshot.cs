@@ -49,15 +49,14 @@ namespace TestAPP1.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("StudentName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnOrder(2);
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Student", "st");
+                    b.ToTable("StudentDto", "st");
                 });
 #pragma warning restore 612, 618
         }

@@ -2,7 +2,7 @@
 
 namespace TestAPP1.Controllers.Validation
 {
-    public class StudentRequestValidation : AbstractValidator<Student.Student>
+    public class StudentRequestValidation : AbstractValidator<Student.StudentDto>
     {
         public StudentRequestValidation()   {
             RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required");

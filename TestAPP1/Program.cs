@@ -27,7 +27,7 @@ namespace TestAPP1
             builder.Services.AddScoped<IStudentOps, StudentOps>();
             builder.Services.AddScoped<StudentDal>();
              builder.Services.AddValidatorsFromAssemblyContaining<StudentRequestValidation>();
-            builder.Services.AddScoped<IValidator<Student.Student>, StudentRequestValidation>(); 
+            builder.Services.AddScoped<IValidator<Student.StudentDto>, StudentRequestValidation>(); 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

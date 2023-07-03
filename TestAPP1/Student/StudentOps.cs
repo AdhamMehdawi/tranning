@@ -1,12 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Mapster;
+using TestAPP1.DbContext;
 
 namespace TestAPP1.Student
 {
 
     public interface IStudentOps
     {
-        List<Student> GetAllStudent();
-        List<Student> AddStudent(Student st);
+        List<StudentDto> GetAllStudent();
+        Task<List<StudentDto>> AddStudent(StudentDto st);
         int CalculateAge();
     }
     public class StudentDal
@@ -16,12 +18,12 @@ namespace TestAPP1.Student
 
     public class StudentOps2 : IStudentOps
     {
-        public List<Student> GetAllStudent()
+        public List<StudentDto> GetAllStudent()
         {
             throw new NotImplementedException();
         }
 
-        public List<Student> AddStudent(Student st)
+        public Task<List<StudentDto>> AddStudent(StudentDto st)
         {
             throw new NotImplementedException();
         }
@@ -33,29 +35,24 @@ namespace TestAPP1.Student
     }
     public class StudentOps : IStudentOps
     {
-        List<Student> studntList;
-        public StudentOps()
+        AppDbContext _appContext;
+        public StudentOps(AppDbContext appContext)
         {
-            studntList = new List<Student>();
-
+            _appContext = appContext;
         }
 
-        public List<Student> GetAllStudent()
+        public List<StudentDto> GetAllStudent()
         {
-            studntList = new List<Student>();
-            studntList.Add(new Student { Name = "Raj", Age = 20 });
-            studntList.Add(new Student { Name = "Raj2", Age = 25 });
-            studntList.Add(new Student { Name = "Raj2", Age = 24 });
-            studntList.Add(new Student { Name = "Raj3", Age = 28 });
-            studntList.Add(new Student { Name = "Raj4", Age = 27 });
-            studntList.Add(new Student { Name = "Raj5", Age = 26 });
-            return studntList;
+            var list = _appContext.Students.ToList();
+           return list.Adapt<List<StudentDto>>();
         }
 
-        public List<Student> AddStudent(Student st)
+        public async Task<List<StudentDto>> AddStudent(StudentDto st)
         {
-            studntList.Add(st);
-            return studntList;
+            var student= st.Adapt<Domain.Entities.Student>();
+            _appContext.Students.Add(student);
+           await _appContext.SaveChangesAsync();
+           return GetAllStudent();
         }
 
         public int CalculateAge()
@@ -75,7 +72,7 @@ namespace TestAPP1.Student
         public bool IsDeleted { get; set; }
     }
 
-    public class Student : IAuditEntity, ISoftDelete
+    public class StudentDto : IAuditEntity, ISoftDelete
     {
       //  [EmailAddress]
         //[CreditCard]

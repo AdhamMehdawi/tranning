@@ -4,7 +4,7 @@ using TestAPP1.Student;
 
 namespace TestAPP1.Domain.Entities
 {
-    [Table("Student",Schema = "st")]
+    [Table("StudentDto",Schema = "st")]
     public class Student  
     {
         [Key]
@@ -12,9 +12,8 @@ namespace TestAPP1.Domain.Entities
         [Required]
         public string Email { get; set; }
         [Required]
-        [StringLength(50)]
-        [Column(TypeName = "varchar(50)",Order = 2)]
-        public string Name { get; set; }
+        [StringLength(50)] 
+        public string StudentName { get; set; }
 
         public int Age { get; set; }
         public DateTime CreatedDate { get; set; }

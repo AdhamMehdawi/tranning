@@ -12,8 +12,8 @@ using TestAPP1.DbContext;
 namespace TestAPP1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230703100034_CreateStudentTable")]
-    partial class CreateStudentTable
+    [Migration("20230703111016_CreateStudentTable2")]
+    partial class CreateStudentTable2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace TestAPP1.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TestAPP1.Domain.Entities.StudentDto", b =>
+            modelBuilder.Entity("TestAPP1.Domain.Entities.Student", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,11 +52,10 @@ namespace TestAPP1.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("StudentName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnOrder(2);
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 

@@ -12,9 +12,10 @@ namespace TestAPP1.Controllers
     public class StudentController : ControllerBase
     {
         private IStudentOps _st;
-        IValidator<Student.Student> _val;
+        IValidator<Student.StudentDto> _val;
 
-        public StudentController(IStudentOps st, IValidator<Student.Student> val)
+
+        public StudentController(IStudentOps st, IValidator<Student.StudentDto> val)
         {
             _st = st;
             _val = val;
@@ -102,13 +103,13 @@ namespace TestAPP1.Controllers
 
 
         [HttpGet("GetAll")]
-        public ActionResult<List<Student.Student>> GetAllStudent()
+        public ActionResult<List<Student.StudentDto>> GetAllStudent()
         {
             return Ok(_st.GetAllStudent());
         }
 
         [HttpPost("Add")]
-        public IActionResult AddStudent(Student.Student st, [FromServices] IStudentOps ops)
+        public async Task<IActionResult> AddStudent(Student.StudentDto st, [FromServices] IStudentOps ops)
         {
             var result = _val.Validate(st);
             if (!result.IsValid)
@@ -136,7 +137,7 @@ namespace TestAPP1.Controllers
             //    error.code = "1001";
             //    return BadRequest(error);
             //}
-            ops.AddStudent(st);
+            await ops.AddStudent(st);
             return Ok(st);
         }
 
