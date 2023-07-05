@@ -1,8 +1,8 @@
-﻿using FluentValidation;
-using Microsoft.AspNetCore.Http;
+﻿using FluentValidation; 
 using Microsoft.AspNetCore.Mvc;
-using TestAPP1.Student;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using TestAPP1.Core.Models;
+using TestAPP1.Domain.Entities;
+using TestAPP1.Student; 
 
 namespace TestAPP1.Controllers
 {
@@ -34,7 +34,7 @@ namespace TestAPP1.Controllers
                 return NotFound();
             }
             var stList = _st.GetAllStudent();
-            var stLsiStudents = stList.Where(x => x.Name == name).ToList();
+            var stLsiStudents = stList.Where(x => x.StudentName == name).ToList();
 
             return Ok(stLsiStudents[0]);
         }
@@ -43,25 +43,27 @@ namespace TestAPP1.Controllers
         [HttpGet("search/{name}")]
         public IActionResult GetStudentst(string name)
         {
-            //var calssName = "StudentOps";
+            ////var calssName = "StudentOps";
 
-            //typeof(StudentOps).GetMethods();
+            ////typeof(StudentOps).GetMethods();
 
-            if (string.IsNullOrEmpty(name))
-            {
-                return NotFound();
-            }
-            var stList = _st.GetAllStudent();
-            var stLsiStudents = stList.Where(x => x.Name == name).ToList();
+            //if (string.IsNullOrEmpty(name))
+            //{
+            //    return NotFound();
+            //}
+            //var stList = _st.GetAllStudent();
+            //var stLsiStudents = stList.Where(x => x.StudentName == name).ToList();
 
-            return Ok(stLsiStudents[0]);
+           var results= _st.GetStudentAccountName();
+           return Ok(results);
         }
 
 
         [HttpGet("search/id/{id}")]
         public IActionResult GetStudent(int id)
         { 
-            return Ok(id );
+           var studentData= _st.GetStudentById(id);
+            return Ok(studentData);
         }
 
         [HttpGet("searchById")]
@@ -141,6 +143,26 @@ namespace TestAPP1.Controllers
             return Ok(st);
         }
 
+
+        [HttpPost("CreateStudentAccount")]
+        public async Task<IActionResult> CreateStudentAccount(AccountDto account )
+        {
+         //   var a = typeof(AccountDto).GetProperties();
+         //var b = typeof(Account).GetProperties();
+         //foreach (var item in a)
+         //{
+         //                   var c = item.Name;
+         //     var secPropertyInfo = b.FirstOrDefault(x => x.Name == c);
+         //     if (secPropertyInfo != null)
+         //     {
+         //           var value = item.GetValue(account);
+         //           secPropertyInfo.SetValue(account, value);
+         //       }
+         //}
+            //
+         var retsult=  await _st.CreateStudentAccountAsync(account);
+            return Ok(retsult);
+        }
     }
 
     public class ErrorObj{

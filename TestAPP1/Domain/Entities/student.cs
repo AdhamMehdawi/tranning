@@ -18,13 +18,11 @@ namespace TestAPP1.Domain.Entities
         public int Age { get; set; }
         public DateTime CreatedDate { get; set; }
 
-        public DateTime? ModifiedDate { get; set; }
-
-        public bool IsDeleted { get; set; }
-
-
+        public DateTime? ModifiedDate { get; set; } 
+        public bool IsDeleted { get; set; } 
         public bool? IsActive { get; set; }
-
+        [InverseProperty("Student")]
+        public List<Account> Account { get; set; }
 
     }
 }
