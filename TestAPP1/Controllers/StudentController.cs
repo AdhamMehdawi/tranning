@@ -39,6 +39,12 @@ namespace TestAPP1.Controllers
             return Ok(stLsiStudents[0]);
         }
 
+        [HttpGet("search")]
+        public async Task<IActionResult> GetStudentst()
+        {  
+            var results =await _st.GetStudentAccountView();
+            return Ok(results);
+        }
 
         [HttpGet("search/{name}")]
         public IActionResult GetStudentst(string name)

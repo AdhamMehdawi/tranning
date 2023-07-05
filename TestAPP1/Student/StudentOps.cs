@@ -3,6 +3,7 @@ using Mapster;
 using Microsoft.EntityFrameworkCore;
 using TestAPP1.Core.Models;
 using TestAPP1.DbContext;
+using TestAPP1.Domain.Entities;
 
 namespace TestAPP1.Student
 {
@@ -16,6 +17,7 @@ namespace TestAPP1.Student
         Task<AccountDto> CreateStudentAccountAsync(AccountDto account);
 
         List<StudentAccountName> GetStudentAccountName();
+        Task<List<StudentAccountView>> GetStudentAccountView();
     }
     public class StudentDal
     {
@@ -119,6 +121,11 @@ namespace TestAPP1.Student
                 });
             var sql = list.ToQueryString();
             return list.Adapt<List<StudentAccountName>>();
+        }
+
+        public async Task<List<StudentAccountView>> GetStudentAccountView()
+        {
+          return  await _appContext.StudentAccountView.ToListAsync();
         }
 
         public async Task<List<StudentDto>> AddStudent(StudentDto st)
