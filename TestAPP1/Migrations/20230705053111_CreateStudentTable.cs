@@ -15,14 +15,14 @@ namespace TestAPP1.Migrations
                 name: "st");
 
             migrationBuilder.CreateTable(
-                name: "StudentDto",
+                name: "Student",
                 schema: "st",
                 columns: table => new
                 {
-                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StudentName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -39,7 +39,7 @@ namespace TestAPP1.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "StudentDto",
+                name: "Student",
                 schema: "st");
         }
     }

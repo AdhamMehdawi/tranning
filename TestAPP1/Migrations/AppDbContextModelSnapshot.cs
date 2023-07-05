@@ -56,7 +56,7 @@ namespace TestAPP1.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StudentDto", "st");
+                    b.ToTable("Student", "st");
                 });
 #pragma warning restore 612, 618
         }

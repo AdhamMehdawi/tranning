@@ -4,7 +4,7 @@ using TestAPP1.Student;
 
 namespace TestAPP1.Domain.Entities
 {
-    [Table("StudentDto",Schema = "st")]
+    [Table("Student", Schema = "st")]
     public class Student  
     {
         [Key]

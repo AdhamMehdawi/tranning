@@ -12,7 +12,7 @@ using TestAPP1.DbContext;
 namespace TestAPP1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230703100034_CreateStudentTable")]
+    [Migration("20230705053111_CreateStudentTable")]
     partial class CreateStudentTable
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace TestAPP1.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TestAPP1.Domain.Entities.StudentDto", b =>
+            modelBuilder.Entity("TestAPP1.Domain.Entities.Student", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,15 +52,14 @@ namespace TestAPP1.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("StudentName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnOrder(2);
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("StudentDto", "st");
+                    b.ToTable("Student", "st");
                 });
 #pragma warning restore 612, 618
         }
