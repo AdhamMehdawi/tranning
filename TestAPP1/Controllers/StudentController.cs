@@ -13,18 +13,20 @@ namespace TestAPP1.Controllers
     {
         private IStudentOps _st;
         IValidator<Student.StudentDto> _val;
+        ILogger<StudentController> _logger;
 
-
-        public StudentController(IStudentOps st, IValidator<Student.StudentDto> val)
+        public StudentController(IStudentOps st, IValidator<Student.StudentDto> val, ILogger<StudentController> logger)
         {
             _st = st;
             _val = val;
+            _logger = logger;
         }
         // api/student/get/raj
 
         [HttpGet("{name}")]
         public IActionResult GetStudent(string name)
         {
+            _logger.LogInformation($"GetStudent method called with name {name}");
             //var calssName = "StudentOps";
 
             //typeof(StudentOps).GetMethods();

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TestAPP1.DbContext;
 
@@ -11,9 +12,11 @@ using TestAPP1.DbContext;
 namespace TestAPP1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230706064354_CreateSeedDataForStudent")]
+    partial class CreateSeedDataForStudent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,11 +95,11 @@ namespace TestAPP1.Migrations
                         {
                             Id = 5,
                             Age = 10,
-                            CreatedDate = new DateTime(2023, 7, 6, 10, 6, 37, 942, DateTimeKind.Local).AddTicks(464),
+                            CreatedDate = new DateTime(2023, 7, 6, 9, 43, 54, 477, DateTimeKind.Local).AddTicks(2409),
                             Email = "test@test3.com",
                             IsActive = false,
                             IsDeleted = true,
-                            ModifiedDate = new DateTime(2023, 7, 6, 10, 6, 37, 942, DateTimeKind.Local).AddTicks(506),
+                            ModifiedDate = new DateTime(2023, 7, 6, 9, 43, 54, 477, DateTimeKind.Local).AddTicks(2452),
                             StudentName = "Raj"
                         });
                 });
@@ -135,7 +138,7 @@ namespace TestAPP1.Migrations
                     b.HasOne("TestAPP1.Domain.Entities.Student", "Student")
                         .WithMany("Account")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Student");
