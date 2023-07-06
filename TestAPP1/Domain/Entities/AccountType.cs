@@ -4,5 +4,6 @@
     {
         public int Id { get; set; }
         public string AccountTypeName { get; set; }
+        public List<Account> Accounts { get; set; }
     }
 }

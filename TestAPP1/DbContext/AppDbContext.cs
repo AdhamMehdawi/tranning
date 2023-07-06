@@ -4,15 +4,13 @@ using TestAPP1.Domain.Entities;
 namespace TestAPP1.DbContext
 {
 
-    public class AppDbContext2 : Microsoft.EntityFrameworkCore.DbContext
-    {
-        public AppDbContext2(DbContextOptions<AppDbContext> options) : base(options) { }
-    }
+  
     public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
         public DbSet<Domain.Entities.Student> Students { get; set; }
         public DbSet<Domain.Entities.Account> Accounts { get; set; }
+        public DbSet<Domain.Entities.AccountType> AccountType { get; set; }
         public DbSet<Domain.Entities.StudentAccountView> StudentAccountView { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -44,6 +42,19 @@ namespace TestAPP1.DbContext
                 .HasMaxLength(50)
                 .IsRequired();
             modelBuilder.Entity<Domain.Entities.Student>().HasQueryFilter(c => c.IsDeleted == false);
+
+            modelBuilder.Entity<Domain.Entities.AccountType>()
+                .HasData(new AccountType()
+                {
+                    AccountTypeName = "Default Account",
+                    Id = 1
+                });
+
+            modelBuilder.Entity<Domain.Entities.Account>().Property(c => c.AccountTypeId).HasDefaultValue("1");
+            modelBuilder.Entity<Domain.Entities.AccountType>()
+                .HasMany(c => c.Accounts)
+                .WithOne(c => c.AccountType)
+                .HasForeignKey(c => c.AccountTypeId);
 
             // modelBuilder.Entity<Domain.Entities.Student>().Property(c => c.StudentName).HasColumnName("Name");
 

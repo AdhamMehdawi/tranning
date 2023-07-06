@@ -13,6 +13,8 @@ namespace TestAPP1.Domain.Entities
         public int  StudentId { get; set; }
        
         public Student Student { get; set; }
+        public int AccountTypeId { get; set; }
+        public AccountType AccountType {get; set; }
 
 }
 }

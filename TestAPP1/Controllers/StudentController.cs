@@ -38,7 +38,7 @@ namespace TestAPP1.Controllers
             var stList = _st.GetAllStudent();
             var stLsiStudents = stList.Where(x => x.StudentName == name).ToList();
 
-            return Ok(stLsiStudents[0]);
+            return Ok(stLsiStudents.FirstOrDefault());
         }
 
         [HttpGet("search")]
