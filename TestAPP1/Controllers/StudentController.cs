@@ -1,4 +1,7 @@
-﻿using FluentValidation; 
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TestAPP1.Core.Models;
 using TestAPP1.Domain.Entities;
@@ -9,6 +12,7 @@ namespace TestAPP1.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class StudentController : ControllerBase
     {
         private IStudentOps _st;
@@ -22,7 +26,7 @@ namespace TestAPP1.Controllers
             _logger = logger;
         }
         // api/student/get/raj
-
+        [AllowAnonymous]
         [HttpGet("{name}")]
         public IActionResult GetStudent(string name)
         {
@@ -43,7 +47,9 @@ namespace TestAPP1.Controllers
 
         [HttpGet("search")]
         public async Task<IActionResult> GetStudentst()
-        {  
+        {  var student=new Student.StudentDto();
+            student.StudentName = "Raj";
+
             var results =await _st.GetStudentAccountView();
             return Ok(results);
         }
