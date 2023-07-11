@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TestAPP1.DbContext;
@@ -7,7 +9,7 @@ using TestAPP1.Domain.Entities;
 namespace TestAPP1.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController] 
     public class SystemAccountController : ControllerBase
     {
         private readonly AppDbContext _db;
@@ -15,7 +17,7 @@ namespace TestAPP1.Controllers
         {
             this._db = db;
         }
-
+        [Authorize(Policy = "MobilePolicy")]
         [HttpGet("Get")]
         public async Task<IActionResult> GetSystemAccount()
         {
@@ -27,10 +29,11 @@ namespace TestAPP1.Controllers
             return Ok(list);
         }
 
+        //[Authorize(Policy = "MobilePolicy1")]
         //[HttpGet("Get")]
         //public async Task<IActionResult> GetSystemAccount3()
         //{
-            
+
         //    var list = await _db.AccountType.ToListAsync();
         //    //AccountType accounttype = new AccountType();
         //    //accounttype.AccountTypeName = "System Account";

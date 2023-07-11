@@ -1,8 +1,10 @@
 ﻿using FluentValidation;
+using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TestAPP1.Common;
 using TestAPP1.Core.Models;
 using TestAPP1.Domain.Entities;
 using TestAPP1.Student; 
@@ -12,7 +14,8 @@ namespace TestAPP1.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+//    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     public class StudentController : ControllerBase
     {
         private IStudentOps _st;
@@ -121,6 +124,8 @@ namespace TestAPP1.Controllers
         [HttpGet("GetAll")]
         public ActionResult<List<Student.StudentDto>> GetAllStudent()
         {
+            Hangfire.RecurringJob.AddOrUpdate("testjob", () => _st.GetAllStudent(), Cron.Minutely);
+            //RecurringJob.RemoveIfExists("testjob");
             return Ok(_st.GetAllStudent());
         }
 
@@ -157,7 +162,7 @@ namespace TestAPP1.Controllers
             return Ok(st);
         }
 
-
+        //[Authorize(Roles = "Admin")]
         [HttpPost("CreateStudentAccount")]
         public async Task<IActionResult> CreateStudentAccount(AccountDto account )
         {
@@ -174,8 +179,13 @@ namespace TestAPP1.Controllers
          //       }
          //}
             //
-         var retsult=  await _st.CreateStudentAccountAsync(account);
-            return Ok(retsult);
+            
+        var joibId=    BackgroundJob.Enqueue(() => _st.CreateStudentAccountAsync(account));
+       //  var retsult=  await _st.CreateStudentAccountAsync(account);
+
+
+
+            return Ok("Student Will be created soon!! ");
         }
     }
 
